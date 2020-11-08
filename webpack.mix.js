@@ -12,6 +12,12 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        //
-    ]);
+.postCss('resources/css/app.css', 'public/css', [
+    //
+]);
+
+// const mix = require('laravel-mix')
+
+// mix.browserSync('vuesplash.test')
+//   .js('resources/js/app.js', 'public/js')
+//   .version()
