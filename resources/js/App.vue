@@ -6,4 +6,3 @@
       </div>
     </main>
   </div>
-</template>

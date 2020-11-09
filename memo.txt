@@ -1,4 +1,9 @@
 
+2020/11/9
+./vendor/bin/phpunit --testbox
+テストが通らない。undable to find Json
+テストは飛ばす
+**********************/
 2020/11/8
 browserSyncするとエラーになってnpm run読み込まない
 
