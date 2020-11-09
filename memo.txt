@@ -3,6 +3,8 @@
 ./vendor/bin/phpunit --testbox
 テストが通らない。undable to find Json
 テストは飛ばす
+
+RouterLink ... 普通のアンカーリンクと挙動が大きく異なるのは通常の画面遷移（＝サーバサイドへの GET リクエスト）が発生しないこと
 **********************/
 2020/11/8
 browserSyncするとエラーになってnpm run読み込まない
