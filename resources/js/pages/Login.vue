@@ -20,7 +20,7 @@
     <label for="login-password">Password</label>
     <input type="password" class="form__item" id="login-password"  v-model="loginForm.password"  >
     <div class="form__button">
-      <button type="submit" class="button button--inverse">login</button>
+      <button type="submit" class="button button--inverse">Login</button>
     </div>
   </form>
  </div>
@@ -35,7 +35,7 @@
     <label for="password-confirmation">Password (confirm)</label>
     <input type="password" class="form__item" id="password-confirmation" v-model="registerForm.password_confirmation">
     <div class="form__button">
-      <button type="submit" class="button button--inverse">register</button>
+      <button type="submit" class="button button--inverse">Register</button>
     </div>
   </form>
    </div>
@@ -63,9 +63,20 @@ export default {
     login() {
       console.log(this.loginForm)
     },
-    register() {
-      console.log(this.registerForm)
+    async register() {
+  // authストアのresigterアクションを呼び出す.dispatch メソッドの第一引数はアクションの名前.第二引数にはフォームの入力値を渡している
+  await this.$store.dispatch('auth/register', this.registerForm)
+
+  // トップページに移動する
+  this.$router.push('/')
     },
+  async login () {
+  // authストアのloginアクションを呼び出す
+  await this.$store.dispatch('auth/login', this.loginForm)
+
+  // トップページに移動する
+  this.$router.push('/')
+},
   }
 }
 </script>
