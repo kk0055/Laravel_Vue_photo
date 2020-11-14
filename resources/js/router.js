@@ -8,6 +8,8 @@ import Login from './pages/Login.vue'
 // store/index.js.auth.jsをインポートする
 import store from './store'
 
+import SystemError from './pages/errors/System.vue'
+
 // VueRouterプラグインを使用する
 Vue.use(VueRouter)
 
@@ -28,6 +30,10 @@ const routes = [
         next()
       }
     }
+  },
+  {
+    path: '/500',
+    component: SystemError
   }
 ]
 
