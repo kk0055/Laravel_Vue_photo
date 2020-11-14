@@ -22,6 +22,9 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+// 写真投稿
+Route::post('/photos', 'PhotoController@create')->name('photo.create');
+
 // ログインユーザー
 // Route::get('/user', fn() => Auth::user())->name('user');
 
