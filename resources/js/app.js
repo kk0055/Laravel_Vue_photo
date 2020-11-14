@@ -5,8 +5,13 @@ import Vue from 'vue'
 import router from './router'
 // ルートコンポーネントをインポートする
 import App from './App.vue'
-// store/index.jsをインポートする
+// store/index.js.auth.jsをインポートする
 import store from './store'
+
+//アプリ起動時、Vue インスタンス生成前に store/auth.js(index.js)のcurrentUser アクション呼び出し
+//
+// const createApp = async () => {
+//   await store.dispatch('auth/currentUser')
 
 new Vue({
   el: '#app',
@@ -16,3 +21,5 @@ new Vue({
   template: '<App />' // ルートコンポーネントを描画する
 
 })
+// }
+// createApp()

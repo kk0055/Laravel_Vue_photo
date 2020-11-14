@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+//auth.jsをimport
 import auth from './auth'
 
 Vue.use(Vuex)
