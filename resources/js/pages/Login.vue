@@ -80,13 +80,11 @@ export default {
       }
     }
   },
-  computed: {
-  ...mapState({
+  computed: mapState({
     apiStatus: state => state.auth.apiStatus,
     loginErrors: state => state.auth.loginErrorMessages,
     registerErrors: state => state.auth.registerErrorMessages
-  })
-},
+  }),
   methods: {
     async register() {
   // authストアのresigterアクションを呼び出す.dispatch メソッドの第一引数はアクションの名前.第二引数にはフォームの入力値を渡している

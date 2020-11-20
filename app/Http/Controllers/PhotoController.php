@@ -13,7 +13,7 @@ class PhotoController extends Controller
 {
     public function __construct()
     {
-        // 認証が必要
+    
         $this->middleware('auth');
     }
 
@@ -24,31 +24,36 @@ class PhotoController extends Controller
      */
     public function create(StorePhoto $request)
     {
-           $photo = new Photo();
+        $extension = $request->photo->extension();
 
-             if($request->hasFile('photo')){
-          
-            $filenameWithExt = $request->file('photo')->getClientOriginalName();
-            $filename = pathinfo($filenameWithExt,PATHINFO_FILENAME); 
-            $extension = $request->file('photo')->getClientOriginalExtension();
-    
-            //Create New file name
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            $path = $request->file('photo')->storeAs('public/photos',$fileNameToStore);
-            
-            $photo->filename = $fileNameToStore ;
-            $photo->save();
+        $photo = new Photo();
 
-            dd($photo);
-        }else {
-            $fileNameToStore = 'noimage.jpg';
+        // インスタンス生成時に割り振られたランダムなID値と
+        // 本来の拡張子を組み合わせてファイル名とする
+        $photo->filename = $photo->id . '.' . $extension;
 
-            $photo->save();
-            dd($photo);
+        // S3にファイルを保存する
+        // 第三引数の'public'はファイルを公開状態で保存するため
+        Storage::cloud()
+            ->putFileAs('', $request->photo, $photo->filename, 'public');
+
+        // データベースエラー時にファイル削除を行うため
+        // トランザクションを利用する
+        DB::beginTransaction();
+
+        try {
+            Auth::user()->photos()->save($photo);
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            // DBとの不整合を避けるためアップロードしたファイルを削除
+            Storage::cloud()->delete($photo->filename);
+            throw $exception;
         }
 
-          
-          
+        // リソースの新規作成なので
+        // レスポンスコードは201(CREATED)を返却する
+        return response($photo, 201);
     }
 
 }

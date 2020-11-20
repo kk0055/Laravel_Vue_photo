@@ -55,6 +55,7 @@ const actions = {
   async login (context, data) {
     context.commit('setApiStatus', null)
     const response = await axios.post('/api/login', data)
+   
 
     if (response.status === OK) {
       context.commit('setApiStatus', true)
@@ -67,10 +68,11 @@ const actions = {
       context.commit('setLoginErrorMessages', response.data.errors)
     } else {
           //あるストアモジュールから別のモジュールのミューテーションを commit する場合は第三引数に { root: true } を追加
+          
       context.commit('error/setCode', response.status, { root: true })
     }
   },
-
+  
   // ログアウト
   async logout (context) {
     context.commit('setApiStatus', null)

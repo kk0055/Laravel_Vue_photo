@@ -1,30 +1,29 @@
 <template>
   <footer class="footer">
-    <button v-if="isLogin" class="button button--link" @click="logout" >
+    <button v-if="isLogin" class="button button--link" @click="logout">
       Logout
-      </button>
-    <RouterLink  v-else class="button button--link" to="/login">
+    </button>
+    <RouterLink v-else class="button button--link" to="/login">
       Login / Register
     </RouterLink>
-  
   </footer>
 </template>
+
 <script>
 import { mapState, mapGetters } from 'vuex'
 export default {
   computed: {
-     ...mapState({
+    ...mapState({
       apiStatus: state => state.auth.apiStatus
     }),
-     ...mapGetters({
+    ...mapGetters({
       isLogin: 'auth/check'
     })
   },
   methods: {
-    async logout() {
+    async logout () {
       await this.$store.dispatch('auth/logout')
-
-         if (this.apiStatus) {
+      if (this.apiStatus) {
         this.$router.push('/login')
       }
     }

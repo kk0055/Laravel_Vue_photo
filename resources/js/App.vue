@@ -27,6 +27,7 @@ export default {
   },
     computed: {
     errorCode () {
+      //error.js参照
       return this.$store.state.error.code
     }
   },

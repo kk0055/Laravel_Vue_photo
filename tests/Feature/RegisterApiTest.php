@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 
+
 class RegisterApiTest extends TestCase
 {
     use RefreshDatabase;
@@ -14,10 +15,10 @@ class RegisterApiTest extends TestCase
      /**
      * @test
      */
-    public function should_新しいユーザーを作成して返却する()
+    public function testResisterApiTest()
     {
         $data = [
-            'name' => 'vuesplash user',
+            "name" => "userdayo",
             'email' => 'dummy@email.com',
             'password' => 'test1234',
             'password_confirmation' => 'test1234',
@@ -30,6 +31,6 @@ class RegisterApiTest extends TestCase
 
         $response
             ->assertStatus(201)
-            ->assertJson(['name' => $user->name]);
+            ->assertJson([['name' => $user->name]]);
     }
 }
