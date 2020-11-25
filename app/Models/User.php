@@ -41,6 +41,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    //Jsonで表示したいもの
+    protected $visible = [
+        'name',
+    ];
+
     public function photos()
 {
     return $this->hasMany('App\Models\Photo');

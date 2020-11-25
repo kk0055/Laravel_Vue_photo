@@ -14,7 +14,7 @@ class PhotoController extends Controller
     public function __construct()
     {
     
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['index','download']);
     }
 
     /**
@@ -54,6 +54,16 @@ class PhotoController extends Controller
         // リソースの新規作成なので
         // レスポンスコードは201(CREATED)を返却する
         return response($photo, 201);
+    }
+
+    public function index()
+    {
+        //withで「N+1」問題を回避
+        //with --引数で渡したリレーションが定義されたテーブルの情報を先にまとめて取得
+        $photos = Photo::with(['owner'])
+        ->orderBy(Photo::CREATED_AT, 'desc')->paginate();
+
+        return $photos;
     }
 
 }
