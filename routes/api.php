@@ -20,7 +20,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/user', fn() => Auth::user())->name('user');
 
 // 写真投稿
-Route::post('/photos', [PhotoController::class, 'logout'])->name('photo.create');
+Route::post('/photos', [PhotoController::class, 'create'])->name('photo.create');
 
 
 

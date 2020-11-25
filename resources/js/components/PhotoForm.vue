@@ -10,7 +10,7 @@
       <li v-for="msg in errors.photo" :key="msg">{{ msg }}</li>
     </ul>
   </div>
-          <input class="form__item" type="file" @change="onFileChange">
+    <input class="form__item" type="file" @change="onFileChange">
     <output class="form__output" v-if="preview">
       <img :src="preview" alt="">
     </output>
@@ -91,6 +91,7 @@ export default {
 
   if (response.status === UNPROCESSABLE_ENTITY) {
     this.errors = response.data.errors
+    
     return false
   }
     this.reset()
@@ -100,6 +101,7 @@ export default {
       this.$store.commit('error/setCode', response.status)
       return false
     }
+     // メッセージ登録
   this.$store.commit('message/setContent', {
     content: '写真が投稿されました！',
     timeout: 6000
