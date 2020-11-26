@@ -14,7 +14,7 @@ class PhotoController extends Controller
     public function __construct()
     {
     
-        $this->middleware('auth')->except(['index','download']);
+        $this->middleware('auth')->except(['index', 'download']);
     }
 
     public function index()
@@ -24,7 +24,8 @@ class PhotoController extends Controller
         $photos = Photo::with(['owner'])
         ->orderBy(Photo::CREATED_AT, 'desc')->paginate();
 
-        return $photos;
+        
+       return $photos;
     }
 
 
@@ -71,16 +72,17 @@ class PhotoController extends Controller
   
     public function download(Photo $photo)
     {
-        if (! Storage::cloud()->exists($photo->filename)){
+        // 写真の存在チェック
+        if (! Storage::cloud()->exists($photo->filename)) {
             abort(404);
         }
 
-        $disposition = 'attachment; filename"'.$photo->filename.'"';
+        $disposition = 'attachment; filename="' . $photo->filename . '"';
         $headers = [
             'Content-Type' => 'application/octet-stream',
             'Content-Disposition' => $disposition,
         ];
-        return response(Storage::cloud()->get($photo->filename),200,$headers);
-    }
 
+        return response(Storage::cloud()->get($photo->filename), 200, $headers);
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 
 class Photo extends Model
 {
@@ -80,11 +81,10 @@ class Photo extends Model
  * アクセサ - url
  * @return string
  */
-    public function getUrlAttribute()
-    {
-        
-        return Storage::cloud()->url($this->attributes['filename']);
-    }
+public function getUrlAttribute()
+{
+    return Storage::cloud()->url($this->attributes['filename']);
+}
 
 
 }
