@@ -17,6 +17,18 @@ class PhotoController extends Controller
         $this->middleware('auth')->except(['index','download']);
     }
 
+    public function index()
+    {
+        //withで「N+1」問題を回避
+        //with --引数で渡したリレーションが定義されたテーブルの情報を先にまとめて取得
+        $photos = Photo::with(['owner'])
+        ->orderBy(Photo::CREATED_AT, 'desc')->paginate();
+
+        return $photos;
+    }
+
+
+
     /**
      * 写真投稿
      * @param StorePhoto $request
@@ -56,14 +68,19 @@ class PhotoController extends Controller
         return response($photo, 201);
     }
 
-    public function index()
+  
+    public function download(Photo $photo)
     {
-        //withで「N+1」問題を回避
-        //with --引数で渡したリレーションが定義されたテーブルの情報を先にまとめて取得
-        $photos = Photo::with(['owner'])
-        ->orderBy(Photo::CREATED_AT, 'desc')->paginate();
+        if (! Storage::cloud()->exists($photo->filename)){
+            abort(404);
+        }
 
-        return $photos;
+        $disposition = 'attachment; filename"'.$photo->filename.'"';
+        $headers = [
+            'Content-Type' => 'application/octet-stream',
+            'Content-Disposition' => $disposition,
+        ];
+        return response(Storage::cloud()->get($photo->filename),200,$headers);
     }
 
 }
