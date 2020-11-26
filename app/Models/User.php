@@ -22,15 +22,19 @@ class User extends Authenticatable
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+        //Jsonで表示したいもの
+        protected $visible = [
+            'name',
+        ];
+    // /**
+    //  * The attributes that should be hidden for arrays.
+    //  *
+    //  * @var array
+    //  */
+    // protected $hidden = [
+    //     'password',
+    //     'remember_token',
+    // ];
 
     /**
      * The attributes that should be cast to native types.
@@ -41,10 +45,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    //Jsonで表示したいもの
-    protected $visible = [
-        'name',
-    ];
+   
 
     public function photos()
 {
