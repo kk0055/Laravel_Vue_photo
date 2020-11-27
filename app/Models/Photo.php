@@ -23,7 +23,7 @@ class Photo extends Model
         'url',
     ];
 
-  
+    protected $perPage = 5;
    
 
     const ID_LENGTH = 12;

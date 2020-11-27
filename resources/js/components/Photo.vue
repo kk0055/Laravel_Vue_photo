@@ -19,7 +19,7 @@
         >
           <i class="icon ion-md-heart"></i>12
         </button>
-
+      <!-- GET リクエストを送信 -->
         <a
         class="photo__action"
         title="Download photo"
