@@ -27,7 +27,8 @@ Route::post('/photos', [PhotoController::class, 'create'])->name('photo.create')
 Route::get('/photos', [PhotoController::class, 'index'])->name('photo.index');
 
 
-
+// 写真一覧
+Route::get('/photos/{id}', [PhotoController::class, 'show'])->name('photo.show');
 
 
 
