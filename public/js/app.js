@@ -2621,6 +2621,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2632,7 +2638,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       photo: null,
-      fullWidth: false
+      fullWidth: false,
+      commentContent: ''
     };
   },
   methods: {
@@ -2671,27 +2678,53 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    addComment: function addComment() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios.post("/api/photos/".concat(_this2.id, "/comments"), {
+                  content: _this2.commentContent
+                });
+
+              case 2:
+                response = _context2.sent;
+                _this2.commentContent = '';
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     }
   },
   watch: {
     $route: {
       handler: function handler() {
-        var _this2 = this;
+        var _this3 = this;
 
-        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
             while (1) {
-              switch (_context2.prev = _context2.next) {
+              switch (_context3.prev = _context3.next) {
                 case 0:
-                  _context2.next = 2;
-                  return _this2.fetchPhoto();
+                  _context3.next = 2;
+                  return _this3.fetchPhoto();
 
                 case 2:
                 case "end":
-                  return _context2.stop();
+                  return _context3.stop();
               }
             }
-          }, _callee2);
+          }, _callee3);
         }))();
       },
       immediate: true
@@ -4967,11 +5000,48 @@ var render = function() {
               },
               [
                 _c("i", { staticClass: "icon ion-md-arrow-round-down" }),
-                _vm._v("Download\n    ")
+                _vm._v("Download\n      ")
               ]
             ),
             _vm._v(" "),
-            _vm._m(1)
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                staticClass: "form",
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.addComment($event)
+                  }
+                }
+              },
+              [
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.commentContent,
+                      expression: "commentContent"
+                    }
+                  ],
+                  staticClass: "form__item",
+                  domProps: { value: _vm.commentContent },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.commentContent = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm._m(2)
+              ]
+            )
           ])
         ]
       )
@@ -4985,7 +5055,7 @@ var staticRenderFns = [
     return _c(
       "button",
       { staticClass: "button button--like", attrs: { title: "Like photo" } },
-      [_c("i", { staticClass: "icon ion-md-heart" }), _vm._v("12\n    ")]
+      [_c("i", { staticClass: "icon ion-md-heart" }), _vm._v("12\n      ")]
     )
   },
   function() {
@@ -4994,7 +5064,19 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("h2", { staticClass: "photo-detail__title" }, [
       _c("i", { staticClass: "icon ion-md-chatboxes" }),
-      _vm._v("Comments\n    ")
+      _vm._v("Comments\n      ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form__button" }, [
+      _c(
+        "button",
+        { staticClass: "button button--inverse", attrs: { type: "submit" } },
+        [_vm._v("submit comment")]
+      )
     ])
   }
 ]

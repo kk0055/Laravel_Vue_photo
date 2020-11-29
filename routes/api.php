@@ -30,7 +30,7 @@ Route::get('/photos', [PhotoController::class, 'index'])->name('photo.index');
 // 写真一覧
 Route::get('/photos/{id}', [PhotoController::class, 'show'])->name('photo.show');
 
-
-
+// コメント
+Route::post('/photos/{photo}/comments',[PhotoController::class, 'addComment'])->name('photo.comment');
 
 
