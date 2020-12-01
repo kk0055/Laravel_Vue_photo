@@ -23,7 +23,7 @@ class PhotoController extends Controller
     {
         //withで「N+1」問題を回避
         //with --引数で渡したリレーションが定義されたテーブルの情報を先にまとめて取得
-        $photos = Photo::with(['owner'])
+        $photos = Photo::with(['owner',  'likes'])
         ->orderBy(Photo::CREATED_AT, 'desc')->paginate();
 
         
@@ -93,7 +93,7 @@ class PhotoController extends Controller
     {
         $photo = Photo::where('id',$id)
         //Photoモデルのcommentsメソッド Commentモデルのauthorメソッド 
-        ->with(['owner','comments.author'])->first();
+        ->with(['owner','comments.author','likes' ])->first();
 
         
         return $photo ?? abort(404);
@@ -113,4 +113,30 @@ class PhotoController extends Controller
         return response($new_comment, 201);
 
     }
+
+    public function like(string $id)
+    {
+        $photo = Photo::where('id',$id)->with('likes')->first();
+
+        if(! $photo) {
+            abort(404);
+        }
+        $photo->likes()->detach(Auth::user()->id);
+        $photo->likes()->attach(Auth::user()->id);
+          
+        return ["photo_id" => $id];
+    }
+
+    public function unlike(string $id)
+{
+    $photo = Photo::where('id', $id)->with('likes')->first();
+
+    if (! $photo) {
+        abort(404);
+    }
+
+    $photo->likes()->detach(Auth::user()->id);
+
+    return ["photo_id" => $id];
+}
 }
